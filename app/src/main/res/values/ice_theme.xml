@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Ice.DamGame" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/ice_primary</item>
+        <item name="colorPrimaryVariant">@color/ice_primary_variant</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/ice_secondary_variant</item>
+        <item name="colorSecondaryVariant">@color/ice_light</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="buttonStyle">@drawable/ice_button_gradient</item>
+        <!-- Status bar color. -->
+        <!-- Customize your theme here. -->
+        <item name="android:windowNoTitle">true</item>
+    </style>
+</resources>
