@@ -2,6 +2,7 @@ package dam.gala.damgame.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,6 +11,7 @@ import dam.gala.damgame.fragments.SettingsFragment;
 import dam.gala.damgame.utils.GameUtil;
 
 import static androidx.preference.PreferenceManager.getDefaultSharedPreferences;
+import static androidx.preference.PreferenceManager.setDefaultValues;
 
 /**
  * Actividad para las preferencias de la aplicación
@@ -36,6 +38,7 @@ public class SettingsActivity extends AppCompatActivity {
      */
     @Override
     public void onBackPressed() {
+        setTema();
         setResult(Activity.RESULT_OK,getIntent());
         super.onBackPressed();
     }
@@ -73,11 +76,15 @@ public class SettingsActivity extends AppCompatActivity {
     private void setTema(){
         int sceneCode = Integer.valueOf(getDefaultSharedPreferences(this).
                 getString("theme_setting",String.valueOf(GameUtil.TEMA_HIELO)));
+        SharedPreferences pref = getDefaultSharedPreferences(this);
+
         switch(sceneCode){
             case GameUtil.TEMA_HIELO:
+                pref.edit().putString("theme_setting",String.valueOf(GameUtil.TEMA_HIELO)).commit();
                 setTheme(R.style.Ice_DamGame);
                 break;
             case GameUtil.TEMA_SELVA:
+                pref.edit().putString("theme_setting",String.valueOf(GameUtil.TEMA_SELVA)).commit();
                 setTheme(R.style.Jungle_DamGame);
                 break;
             default:

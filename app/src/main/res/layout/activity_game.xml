@@ -31,19 +31,19 @@
                 android:id="@+id/ivBouncy1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/jungle_lifes_score" />
+                android:background="@drawable/ice_lifes_score" />
 
             <ImageView
                 android:id="@+id/ivBouncy2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/jungle_lifes_score" />
+                android:background="@drawable/ice_lifes_score" />
 
             <ImageView
                 android:id="@+id/ivBouncy3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/jungle_lifes_score" />
+                android:background="@drawable/ice_lifes_score" />
 
             <TextView
                 android:id="@+id/tvExtraLifes"

@@ -2,6 +2,8 @@ package dam.gala.damgame.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -85,7 +87,7 @@ public class GameActivity extends AppCompatActivity implements InterfaceDialog {
                 //El siguiente código es para probar la carga de preguntas, con sus respuestas,
                 //desde la base de datos
                 DatabaseHelper databaseHelper = new DatabaseHelper(GameActivity.this,
-                        null,null, 2);
+                        null,null, 3);
                 DatabaseManager databaseManager = new DatabaseManager(databaseHelper);
                 ArrayList<Question> questions = databaseManager.getQuestions();
                 //ahora, con las questions anteriores, sería fácil generar N números aleatorios, entre
@@ -121,9 +123,9 @@ public class GameActivity extends AppCompatActivity implements InterfaceDialog {
      * Inicio del juego
      */
     private void startGame(){
-        this.sceneCode = Integer.parseInt(getDefaultSharedPreferences(this).
+        this.sceneCode = Integer.valueOf(getDefaultSharedPreferences(this).
                 getString("theme_setting",String.valueOf(GameUtil.TEMA_HIELO)));
-        this.gameMove = Play.createGameMove(this,103);
+        this.gameMove = Play.createGameMove(this,this.sceneCode);
         this.scene = this.gameMove.getScene();
         this.config = new GameConfig(this.scene);
         this.getPlay().setConfig(this.config);
@@ -148,6 +150,19 @@ public class GameActivity extends AppCompatActivity implements InterfaceDialog {
         this.lifes.add(findViewById(R.id.ivBouncy1));
         this.lifes.add(findViewById(R.id.ivBouncy2));
         this.lifes.add(findViewById(R.id.ivBouncy3));
+        SharedPreferences pref = getDefaultSharedPreferences(this);
+        switch (pref.getString("theme_setting",String.valueOf(GameUtil.TEMA_HIELO))){
+            case "103":
+                this.lifes.get(0).setImageBitmap(BitmapFactory.decodeResource(this.getResources(),R.drawable.ice_lifes_score));
+                this.lifes.get(1).setImageBitmap(BitmapFactory.decodeResource(this.getResources(),R.drawable.ice_lifes_score));
+                this.lifes.get(2).setImageBitmap(BitmapFactory.decodeResource(this.getResources(),R.drawable.ice_lifes_score));
+                break;
+            case "104":
+                this.lifes.get(0).setImageBitmap(BitmapFactory.decodeResource(this.getResources(),R.drawable.jungle_lifes_score));
+                this.lifes.get(1).setImageBitmap(BitmapFactory.decodeResource(this.getResources(),R.drawable.jungle_lifes_score));
+                this.lifes.get(2).setImageBitmap(BitmapFactory.decodeResource(this.getResources(),R.drawable.jungle_lifes_score));
+                break;
+        }
 
         this.ivAnswers = findViewById(R.id.ivAnswers);
         this.ivAnswers.setImageBitmap(this.scene.getScoreAnswers());
@@ -160,16 +175,20 @@ public class GameActivity extends AppCompatActivity implements InterfaceDialog {
      * Establece el tema seleccionado en las preferencias
      */
     private void setTema(){
+        SharedPreferences pref = getDefaultSharedPreferences(this);
         this.sceneCode = Integer.parseInt(getDefaultSharedPreferences(this).
                 getString("theme_setting",String.valueOf(GameUtil.TEMA_HIELO)));
         switch(this.sceneCode){
             case GameUtil.TEMA_HIELO:
+                pref.edit().putString("theme_setting",String.valueOf(GameUtil.TEMA_HIELO)).commit();
                 setTheme(R.style.Ice_DamGame);
                 break;
             case GameUtil.TEMA_SELVA:
+                pref.edit().putString("theme_setting",String.valueOf(GameUtil.TEMA_SELVA)).commit();
                 setTheme(R.style.Jungle_DamGame);
                 break;
             default:
+                pref.edit().putString("theme_setting",String.valueOf(GameUtil.TEMA_HIELO)).commit();
                 setTheme(R.style.Ice_DamGame);
                 break;
         }

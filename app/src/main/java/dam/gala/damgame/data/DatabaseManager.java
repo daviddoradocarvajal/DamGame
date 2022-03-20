@@ -22,7 +22,7 @@ import dam.gala.damgame.utils.GameUtil;
 public class DatabaseManager {
     private SQLiteDatabase sqLiteDatabase;
     public DatabaseManager(DatabaseHelper databaseHelper){
-        this.sqLiteDatabase = databaseHelper.getWritableDatabase();
+        this.sqLiteDatabase = databaseHelper.getReadableDatabase();
     }
     @RequiresApi(api = Build.VERSION_CODES.N)
     public ArrayList<Question> getQuestions(){
@@ -30,9 +30,9 @@ public class DatabaseManager {
         ArrayList<Answer> answers = new ArrayList<>();
         Question question=null;
         Answer answer = null;
-
+        //Cursor qCursorQ = sqLiteDatabase.query("PREGUNTA",new String[]{"PREGUNTA.numero,PREGUNTA.curso,PREGUNTA.asignatura,PREGUNTA.enunciado,PREGUNTA.compleja,PREGUNTA.simple"},null,null,null,null,null);
         Cursor qCursorQ = sqLiteDatabase.rawQuery("SELECT * FROM PREGUNTA",
-                null);
+              null);
 
         while(qCursorQ.moveToNext()) {
             question = new Question(qCursorQ.getInt(0), //numero
